@@ -113,7 +113,12 @@ public class AddressBook {
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
     }
-
+    
+    public void editPerson(Person toEdit, ReadOnlyPerson toRemove) throws DuplicatePersonException, PersonNotFoundException {
+        syncTagsWithMasterList(toEdit);
+        allPersons.add(toEdit);
+        allPersons.remove(toRemove);
+    }
     /**
      * Removes the equivalent Tag from the address book.
      *
