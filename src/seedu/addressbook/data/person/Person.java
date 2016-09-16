@@ -67,21 +67,25 @@ public class Person implements ReadOnlyPerson {
         tags.setTags(replacement);
     }
     
+    @Override
     public void setName(String replacement) throws IllegalValueException {
         Name newName = new Name(replacement);
         this.name = newName;
     }
     
+    @Override
     public void setPhone(String replacement, boolean isPrivate) throws IllegalValueException {
         Phone newPhone = new Phone(replacement, isPrivate);
         this.phone = newPhone;
     }
-
+    
+    @Override
     public void setEmail(String replacement, boolean isPrivate) throws IllegalValueException {
         Email newEmail = new Email(replacement, isPrivate);
         this.email = newEmail;
     }
     
+    @Override
     public void setAddress(String replacement, boolean isPrivate) throws IllegalValueException {
         Address newAddress = new Address(replacement, isPrivate);
         this.address = newAddress;
