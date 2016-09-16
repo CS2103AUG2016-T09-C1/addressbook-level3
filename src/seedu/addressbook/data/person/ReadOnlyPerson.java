@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -13,10 +14,7 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     Email getEmail();
     Address getAddress();
-    Name setName();
-    Phone setPhone();
-    Email setEmail();
-    Address setAddress();
+
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -86,4 +84,8 @@ public interface ReadOnlyPerson {
         }
         return builder.toString();
     }
+    void setName(String replacement) throws IllegalValueException;
+    void setPhone(String replacement, boolean isPrivate) throws IllegalValueException;
+    void setEmail(String replacement, boolean isPrivate) throws IllegalValueException;
+    void setAddress(String replacement, boolean isPrivate) throws IllegalValueException;
 }
