@@ -10,7 +10,7 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Edits a person's data from address book."
-            + "Example: " + COMMAND_WORD + " 1" + "address";
+            + "Example: " + COMMAND_WORD + " 1" + " address" + " changeTo";
     
     public static final String MESSAGE_SUCCESS = "Edited data successfully";
     public static final String MESSAGE_ASKCONFIRMATION = "Are you sure you want to edit data?";
@@ -23,7 +23,7 @@ public class EditCommand extends Command {
     public EditCommand(int targetVisibleIndex, String toEdit, String changeTo) {
         super(targetVisibleIndex);
         this.toEdit = toEdit;
-        this.changeTo = changeTo;;
+        this.changeTo = changeTo;
     }
     
     public String getEdit() {
