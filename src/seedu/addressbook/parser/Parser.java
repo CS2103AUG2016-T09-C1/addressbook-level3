@@ -67,6 +67,9 @@ public class Parser {
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
+            
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
@@ -142,7 +145,15 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
-
+    private Command prepareEdit(String args) {
+        try {
+            String [] split = args.split(" ");
+            final int targetIndex = parseArgsAsDisplayedIndex(split[1]);
+            return new EditCommand(targetIndex, split[2], split[3]);       
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+    }
     /**
      * Parses arguments in the context of the delete person command.
      *
