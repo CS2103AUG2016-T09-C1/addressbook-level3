@@ -2,10 +2,12 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -67,12 +69,15 @@ public class Parser {
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
-            
+
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(arguments);
 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
+
+            case FindByTagCommand.COMMAND_WORD:
+                return prepareFindByTag(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -85,7 +90,7 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
-                
+
             case SortCommand.COMMAND_WORD:
                 return new SortCommand();
 
@@ -152,7 +157,7 @@ public class Parser {
         try {
             String [] split = args.split(" ");
             final int targetIndex = parseArgsAsDisplayedIndex(split[1]);
-            return new EditCommand(targetIndex, split[2], split[3]);       
+            return new EditCommand(targetIndex, split[2], split[3]);
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
@@ -242,5 +247,31 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Parses arguments in the context of the findbytag person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFindByTag(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindByTagCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Tag[] tagwords = new Tag[keywords.length];
+        for(int i=0; i<keywords.length; i++) {
+        	try {
+				tagwords[i] = new Tag(keywords[i]);
+			} catch (IllegalValueException ive) {
+				ive.printStackTrace();
+			}
+        }
+        final Set<Tag> keywordSet = new HashSet<>(Arrays.asList(tagwords));
+        return new FindByTagCommand(keywordSet);
+    }
 
 }
